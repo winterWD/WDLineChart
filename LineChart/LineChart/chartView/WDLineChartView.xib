@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WDLineChartView" customModule="LineChart" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="h1s-nH-FYO" id="NIy-i1-Kg9"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Lo9-WZ-Sk7"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="210"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ps-Sk-tAS">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="收入(元)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGJ-tC-1ub">
+                            <rect key="frame" x="10" y="14" width="63" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="1or-pA-Icb"/>
+                    </constraints>
+                </view>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="h1s-nH-FYO">
+                    <rect key="frame" x="10" y="50" width="300" height="150"/>
+                    <color key="backgroundColor" red="0.1529411765" green="0.4941176471" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="150" id="Ubd-4u-gxh"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="bGn-D9-wya">
+                        <size key="itemSize" width="50" height="150"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="gbM-qM-sEA"/>
+                        <outlet property="delegate" destination="-1" id="O3J-Fu-YUh"/>
+                    </connections>
+                </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zau-tc-i9U">
+                    <rect key="frame" x="0.0" y="200" width="320" height="10"/>
+                    <color key="backgroundColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.90196078430000004" green="0.33725490200000002" blue="0.094117647060000004" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="h1s-nH-FYO" secondAttribute="trailing" constant="10" id="6WF-E8-cyF"/>
+                <constraint firstItem="2ps-Sk-tAS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="7lL-vZ-bqs"/>
+                <constraint firstAttribute="trailing" secondItem="zau-tc-i9U" secondAttribute="trailing" id="7w8-Rv-QDn"/>
+                <constraint firstItem="zau-tc-i9U" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Gw8-Cn-41z"/>
+                <constraint firstItem="zau-tc-i9U" firstAttribute="top" secondItem="h1s-nH-FYO" secondAttribute="bottom" id="cxM-7x-U6b"/>
+                <constraint firstAttribute="trailing" secondItem="2ps-Sk-tAS" secondAttribute="trailing" id="dwv-Lr-G4g"/>
+                <constraint firstAttribute="bottom" secondItem="zau-tc-i9U" secondAttribute="bottom" id="fqD-fY-332"/>
+                <constraint firstItem="2ps-Sk-tAS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mdS-rx-qVx"/>
+                <constraint firstItem="h1s-nH-FYO" firstAttribute="top" secondItem="2ps-Sk-tAS" secondAttribute="bottom" id="nCw-Ni-3sr"/>
+                <constraint firstItem="h1s-nH-FYO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="sSi-i4-7ai"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="229" y="431"/>
+        </view>
+    </objects>
+</document>
