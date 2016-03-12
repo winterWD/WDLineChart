@@ -9,7 +9,7 @@
 import UIKit
 
 class LineChartViewController: UIViewController {
-
+    
     @IBOutlet weak var lineChartView: WDLineChartView!
     var dataArray: [LineChartModel] = []
     
@@ -30,9 +30,9 @@ class LineChartViewController: UIViewController {
             let lineChartModel: LineChartModel = LineChartModel()
             lineChartModel.date = "02-\(index)"
             var data: [LineModel] = []
-            for i in 0...1 {
+            for i in 0...2 {
                 let model: LineModel = LineModel()
-                model.lineColor = i == 0 ? UIColor.redColor() :UIColor.greenColor()
+                model.lineColor = i == 0 ? UIColor.redColor() : i == 1 ? UIColor.greenColor() : UIColor.yellowColor()
                 if index == 0 {
                     model.noStart = true
                     model.curValue = CGFloat(arc4random_uniform(max - min) + min)
@@ -40,12 +40,12 @@ class LineChartViewController: UIViewController {
                 }
                 else if index == 10 {
                     model.noEnd = true
-                    let preModel = (self.dataArray[index - 1] ).lineModels[0] 
+                    let preModel = (self.dataArray[index - 1] ).lineModels[i]
                     model.preValue = preModel.curValue
                     model.curValue = preModel.nextValue
                 }
                 else {
-                   let preModel = (self.dataArray[index - 1] ).lineModels[0] 
+                    let preModel = (self.dataArray[index - 1] ).lineModels[i]
                     model.preValue = preModel.curValue
                     model.curValue = preModel.nextValue
                     model.nextValue = CGFloat(arc4random_uniform(max - min) + min)
@@ -60,5 +60,5 @@ class LineChartViewController: UIViewController {
     @IBAction func buttonAction(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
 }

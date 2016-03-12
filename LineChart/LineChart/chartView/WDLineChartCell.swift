@@ -12,46 +12,52 @@ class WDLineChartCell: UICollectionViewCell {
     
     @IBOutlet weak var dateLabel: UILabel!
     private var lineModels: [LineModel] = []
-    private var lineModel: LineModel!
     func drawLineChart(lineModel: LineChartModel) -> Void {
         self.lineModels = lineModel.lineModels
-        self.lineModel = lineModel.lineModels[0]
         self.dateLabel.text = lineModel.date
-        self.setNeedsLayout()
+        self.setNeedsDisplay()
+        
     }
     
     override func drawRect(rect: CGRect) {
+        
         self.clearsContextBeforeDrawing = true
         
-        // 获取当前画板
-        let context: CGContextRef = UIGraphicsGetCurrentContext()!
-        CGContextSetAllowsAntialiasing(context, true)// 抗锯齿
         
-        let startPoint: CGPoint = self.lineModel.prePoint()
-        let middlePoint: CGPoint = self.lineModel.curPoint()
-        let endPoint: CGPoint = self.lineModel.nextPoint()
+        for model in self.lineModels {
+            let startPoint: CGPoint = model.prePoint()
+            let middlePoint: CGPoint = model.curPoint()
+            let endPoint: CGPoint = model.nextPoint()
+            
+            // 获取当前画板
+            let context: CGContextRef = UIGraphicsGetCurrentContext()!
+            CGContextSetAllowsAntialiasing(context, true)// 抗锯齿
+            CGContextSetLineWidth(context, 1) // 画笔宽度
+            
+            CGContextSetStrokeColorWithColor(context, model.lineColor.CGColor)
+            CGContextSetFillColorWithColor(context, model.lineColor.CGColor)
+            
+            // 画点
+            CGContextFillEllipseInRect(context, CGRectMake(middlePoint.x, middlePoint.y, 5, 5))
+            
+            // 画直线
+            if model.noStart {
+                CGContextMoveToPoint(context, middlePoint.x, middlePoint.y)
+                CGContextAddLineToPoint(context, endPoint.x, endPoint.y)
+            }
+            else if model.noEnd {
+                CGContextMoveToPoint(context, startPoint.x, startPoint.y)
+                CGContextAddLineToPoint(context, middlePoint.x, middlePoint.y)
+            }
+            else {
+                CGContextMoveToPoint(context, startPoint.x, startPoint.y)
+                CGContextAddLineToPoint(context, middlePoint.x, middlePoint.y)
+                CGContextAddLineToPoint(context, endPoint.x, endPoint.y)
+            }
+            
+            CGContextStrokePath(context)//结束
+        }
         
-        CGContextSetStrokeColorWithColor(context, self.lineModel.lineColor.CGColor)
-        CGContextSetFillColorWithColor(context, self.lineModel.lineColor.CGColor)
-        // 画点
-        CGContextFillEllipseInRect(context, CGRectMake(middlePoint.x, middlePoint.y, 5, 5))
-        CGContextSetLineWidth(context, 1) // 画笔宽度
-        // 画直线
-        if self.lineModel.noStart {
-            CGContextMoveToPoint(context, middlePoint.x, middlePoint.y)
-            CGContextAddLineToPoint(context, endPoint.x, endPoint.y)
-        }
-        else if self.lineModel.noEnd {
-            CGContextMoveToPoint(context, startPoint.x, startPoint.y)
-            CGContextAddLineToPoint(context, middlePoint.x, middlePoint.y)
-        }
-        else {
-            CGContextMoveToPoint(context, startPoint.x, startPoint.y)
-            CGContextAddLineToPoint(context, middlePoint.x, middlePoint.y)
-            CGContextAddLineToPoint(context, endPoint.x, endPoint.y)
-        }
-        
-        CGContextStrokePath(context)//结束
     }
 }
 
