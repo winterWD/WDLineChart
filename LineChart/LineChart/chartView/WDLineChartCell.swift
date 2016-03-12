@@ -63,7 +63,7 @@ class WDLineChartCell: UICollectionViewCell {
 
 class LineModel: NSObject {
     
-    private let halfWidth: CGFloat = 49.0/2.0 // 每一个cell的宽度一半，固定值
+    private let halfWidth: CGFloat = 50.0/2.0 // 每一个cell的宽度一半，固定值
     private let height: CGFloat = 135.0 // 每一个cell的高度，固定值
     private let yAxisValue: CGFloat = 100.0 // y轴上最大值
     
