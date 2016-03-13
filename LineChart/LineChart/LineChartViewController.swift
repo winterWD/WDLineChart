@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LineChartViewController: UIViewController {
+class LineChartViewController: UIViewController, WDLineChartViewDataSource{
     
     @IBOutlet weak var lineChartView: WDLineChartView!
     var dataArray: [LineChartModel] = []
@@ -18,9 +18,14 @@ class LineChartViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         //        self.view.backgroundColor = UIColor.lightGrayColor()
         
+        self.lineChartView.dataSource = self
         self.loadData()
-        
+//        self.lineChartView.reloadData()
         self.lineChartView.configureData(self.dataArray)
+    }
+    
+    @IBAction func buttonAction(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func loadData() {
@@ -28,7 +33,7 @@ class LineChartViewController: UIViewController {
         let min: UInt32 = 5
         for index in 0...10 {
             let lineChartModel: LineChartModel = LineChartModel()
-            lineChartModel.date = "02-\(index)"
+            lineChartModel.bottomString = "02-\(index)"
             var data: [LineModel] = []
             for i in 0...2 {
                 let model: LineModel = LineModel()
@@ -57,8 +62,8 @@ class LineChartViewController: UIViewController {
         }
     }
     
-    @IBAction func buttonAction(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    // datasource
+    func lineChartViewData(lineChartView: WDLineChartView) -> [LineChartDataModel] {
+        return []
     }
-    
 }

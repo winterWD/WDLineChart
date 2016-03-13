@@ -7,15 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FD9CE2A1C95BA0800D2BDDA /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD9CE281C95BA0800D2BDDA /* LineChartViewController.swift */; };
+		0FD9CE2B1C95BA0800D2BDDA /* LineChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FD9CE291C95BA0800D2BDDA /* LineChartViewController.xib */; };
 		C85030291C93B29300DD6802 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85030281C93B29300DD6802 /* AppDelegate.swift */; };
 		C850302B1C93B29300DD6802 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850302A1C93B29300DD6802 /* ViewController.swift */; };
 		C850302E1C93B29300DD6802 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C850302C1C93B29300DD6802 /* Main.storyboard */; };
-		C85030301C93B29300DD6802 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C850302F1C93B29300DD6802 /* Assets.xcassets */; };
 		C85030331C93B29300DD6802 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C85030311C93B29300DD6802 /* LaunchScreen.storyboard */; };
 		C850303E1C93B29300DD6802 /* LineChartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850303D1C93B29300DD6802 /* LineChartTests.swift */; };
 		C85030491C93B29300DD6802 /* LineChartUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85030481C93B29300DD6802 /* LineChartUITests.swift */; };
-		C85030731C94117100DD6802 /* LineChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850306D1C94117100DD6802 /* LineChartViewController.swift */; };
-		C85030741C94117100DD6802 /* LineChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C850306E1C94117100DD6802 /* LineChartViewController.xib */; };
 		C85030751C94117100DD6802 /* WDLineChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C850306F1C94117100DD6802 /* WDLineChartCell.swift */; };
 		C85030761C94117100DD6802 /* WDLineChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C85030701C94117100DD6802 /* WDLineChartCell.xib */; };
 		C85030771C94117100DD6802 /* WDLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85030711C94117100DD6802 /* WDLineChartView.swift */; };
@@ -40,11 +39,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FD9CE281C95BA0800D2BDDA /* LineChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartViewController.swift; sourceTree = "<group>"; };
+		0FD9CE291C95BA0800D2BDDA /* LineChartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LineChartViewController.xib; sourceTree = "<group>"; };
 		C85030251C93B29300DD6802 /* LineChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LineChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C85030281C93B29300DD6802 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C850302A1C93B29300DD6802 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C850302D1C93B29300DD6802 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C850302F1C93B29300DD6802 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C85030321C93B29300DD6802 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C85030341C93B29300DD6802 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C85030391C93B29300DD6802 /* LineChartTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LineChartTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,8 +53,6 @@
 		C85030441C93B29300DD6802 /* LineChartUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LineChartUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C85030481C93B29300DD6802 /* LineChartUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartUITests.swift; sourceTree = "<group>"; };
 		C850304A1C93B29300DD6802 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C850306D1C94117100DD6802 /* LineChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineChartViewController.swift; sourceTree = "<group>"; };
-		C850306E1C94117100DD6802 /* LineChartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LineChartViewController.xib; sourceTree = "<group>"; };
 		C850306F1C94117100DD6802 /* WDLineChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WDLineChartCell.swift; sourceTree = "<group>"; };
 		C85030701C94117100DD6802 /* WDLineChartCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WDLineChartCell.xib; sourceTree = "<group>"; };
 		C85030711C94117100DD6802 /* WDLineChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WDLineChartView.swift; sourceTree = "<group>"; };
@@ -109,11 +107,12 @@
 		C85030271C93B29300DD6802 /* LineChart */ = {
 			isa = PBXGroup;
 			children = (
-				C850306C1C94117100DD6802 /* chartView */,
 				C85030281C93B29300DD6802 /* AppDelegate.swift */,
 				C850302A1C93B29300DD6802 /* ViewController.swift */,
 				C850302C1C93B29300DD6802 /* Main.storyboard */,
-				C850302F1C93B29300DD6802 /* Assets.xcassets */,
+				0FD9CE281C95BA0800D2BDDA /* LineChartViewController.swift */,
+				0FD9CE291C95BA0800D2BDDA /* LineChartViewController.xib */,
+				C850306C1C94117100DD6802 /* chartView */,
 				C85030311C93B29300DD6802 /* LaunchScreen.storyboard */,
 				C85030341C93B29300DD6802 /* Info.plist */,
 			);
@@ -141,8 +140,6 @@
 		C850306C1C94117100DD6802 /* chartView */ = {
 			isa = PBXGroup;
 			children = (
-				C850306D1C94117100DD6802 /* LineChartViewController.swift */,
-				C850306E1C94117100DD6802 /* LineChartViewController.xib */,
 				C85030711C94117100DD6802 /* WDLineChartView.swift */,
 				C85030721C94117100DD6802 /* WDLineChartView.xib */,
 				C850306F1C94117100DD6802 /* WDLineChartCell.swift */,
@@ -219,6 +216,7 @@
 				TargetAttributes = {
 					C85030241C93B29200DD6802 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 3AZ5DU686K;
 					};
 					C85030381C93B29300DD6802 = {
 						CreatedOnToolsVersion = 7.2;
@@ -256,9 +254,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C85030331C93B29300DD6802 /* LaunchScreen.storyboard in Resources */,
-				C85030301C93B29300DD6802 /* Assets.xcassets in Resources */,
-				C85030741C94117100DD6802 /* LineChartViewController.xib in Resources */,
 				C850302E1C93B29300DD6802 /* Main.storyboard in Resources */,
+				0FD9CE2B1C95BA0800D2BDDA /* LineChartViewController.xib in Resources */,
 				C85030781C94117100DD6802 /* WDLineChartView.xib in Resources */,
 				C85030761C94117100DD6802 /* WDLineChartCell.xib in Resources */,
 			);
@@ -289,7 +286,7 @@
 				C85030771C94117100DD6802 /* WDLineChartView.swift in Sources */,
 				C85030291C93B29300DD6802 /* AppDelegate.swift in Sources */,
 				C85030751C94117100DD6802 /* WDLineChartCell.swift in Sources */,
-				C85030731C94117100DD6802 /* LineChartViewController.swift in Sources */,
+				0FD9CE2A1C95BA0800D2BDDA /* LineChartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,22 +427,28 @@
 		C850304E1C93B29300DD6802 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = LineChart/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wd.LineChart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		C850304F1C93B29300DD6802 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = LineChart/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wd.LineChart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

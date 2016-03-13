@@ -10,19 +10,18 @@ import UIKit
 
 class WDLineChartCell: UICollectionViewCell {
     
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var bottomStrLabel: UILabel!
     private var lineModels: [LineModel] = []
-    func drawLineChart(lineModel: LineChartModel) -> Void {
-        self.lineModels = lineModel.lineModels
-        self.dateLabel.text = lineModel.date
+    
+    func drawLineChart(lineChartModel: LineChartModel) -> Void {
+        self.lineModels = lineChartModel.lineModels
+        self.bottomStrLabel.text = lineChartModel.bottomString
         self.setNeedsDisplay()
-        
     }
     
     override func drawRect(rect: CGRect) {
-        
+        // 清楚所有绘画
         self.clearsContextBeforeDrawing = true
-        
         
         for model in self.lineModels {
             let startPoint: CGPoint = model.prePoint()
@@ -37,8 +36,9 @@ class WDLineChartCell: UICollectionViewCell {
             CGContextSetStrokeColorWithColor(context, model.lineColor.CGColor)
             CGContextSetFillColorWithColor(context, model.lineColor.CGColor)
             
+            let pointSize: CGFloat! = 5.0
             // 画点
-            CGContextFillEllipseInRect(context, CGRectMake(middlePoint.x, middlePoint.y, 5, 5))
+            CGContextFillEllipseInRect(context, CGRectMake((middlePoint.x - pointSize/2.0), (middlePoint.y - pointSize/2.0), pointSize, pointSize))
             
             // 画直线
             if model.noStart {
@@ -61,6 +61,13 @@ class WDLineChartCell: UICollectionViewCell {
     }
 }
 
+// 中间数据转换 由普通数据转为图标所需要的数据
+class LineChartModel: NSObject {
+    var lineModels: [LineModel] = [] // 数组的个数就是线条的个数
+    var bottomString: String! // 底部显示文字
+}
+
+// 计算每条线的位置
 class LineModel: NSObject {
     
     private let halfWidth: CGFloat = 50.0/2.0 // 每一个cell的宽度一半，固定值
@@ -71,7 +78,7 @@ class LineModel: NSObject {
     var preValue: CGFloat! = 1.0
     var curValue: CGFloat! = 1.0
     var nextValue: CGFloat! = 1.0
-    var date: String!
+    var maxValueStr: String!
     
     var noStart: Bool = false // 无起点
     var noEnd: Bool  = false // 无终点
