@@ -12,11 +12,38 @@ class WDLineChartCell: UICollectionViewCell {
     
     @IBOutlet weak var bottomStrLabel: UILabel!
     private var lineModels: [LineModel] = []
+    private var circleViews: [UIView] = []
     
     func drawLineChart(lineChartModel: LineChartModel) -> Void {
         self.lineModels = lineChartModel.lineModels
         self.bottomStrLabel.text = lineChartModel.bottomString
         self.setNeedsDisplay()
+        
+        // 移除圆圈
+        self.removeCircleView(self.circleViews)
+        // 画圆圈
+        self.drawCircleView(self.lineModels)
+    }
+    
+    func drawCircleView(lineModels: [LineModel]) -> Void {
+        let pointSize: CGFloat! = 4.0
+        for model in lineModels {
+            let circleView: UIView = UIView.init(frame: CGRectMake(0, 0, pointSize, pointSize))
+            circleView.center = model.curPoint()
+            circleView.backgroundColor = self.backgroundColor
+            self.addSubview(circleView)
+            circleView.layer.cornerRadius = pointSize/2.0
+            circleView.layer.borderWidth = 1.0
+            circleView.layer.borderColor = model.lineColor.CGColor
+            circleView.layer.masksToBounds = true
+            self.circleViews.append(circleView)
+        }
+    }
+    
+    func removeCircleView(circleViews: [UIView]) -> Void {
+        for view in circleViews {
+            view.removeFromSuperview()
+        }
     }
     
     override func drawRect(rect: CGRect) {
@@ -35,10 +62,6 @@ class WDLineChartCell: UICollectionViewCell {
             
             CGContextSetStrokeColorWithColor(context, model.lineColor.CGColor)
             CGContextSetFillColorWithColor(context, model.lineColor.CGColor)
-            
-            let pointSize: CGFloat! = 5.0
-            // 画点
-            CGContextFillEllipseInRect(context, CGRectMake((middlePoint.x - pointSize/2.0), (middlePoint.y - pointSize/2.0), pointSize, pointSize))
             
             // 画直线
             if model.noStart {
@@ -78,8 +101,9 @@ class LineModel: NSObject {
     var preValue: CGFloat! = 1.0
     var curValue: CGFloat! = 1.0
     var nextValue: CGFloat! = 1.0
-    var maxValueStr: String!
+    var bottomString: String!
     
+    var showValue: Bool = false // 是否显示value
     var noStart: Bool = false // 无起点
     var noEnd: Bool  = false // 无终点
     

@@ -9,7 +9,8 @@
 import UIKit
 
 protocol WDLineChartViewDataSource {
-    func lineChartViewData(lineChartView: WDLineChartView) -> [LineChartDataModel]
+    func lineChartView(lineChartView: WDLineChartView, dataForItemAtLine line: Int) -> [LineChartDataModel]
+    func numberOfLinesInLineChartView(lineChartView: WDLineChartView) -> Int
 }
 
 class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -31,42 +32,78 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
         
     }
     // MARK:
-//    func reloadData() -> Void {
-//        if let dataSource = self.dataSource?.lineChartViewData(self) {
-//            for var index = 0; index < dataSource.count; index++ {
-//                let objModel: LineChartDataModel = dataSource[index];
-//                let lineChartModel: LineChartModel = LineChartModel()
-//                lineChartModel.bottomString = objModel.lineChartName
-//                var data: [LineModel] = []
-//                for i in 0...2 {
-//                    let model: LineModel = LineModel()
-//                    model.lineColor = i == 0 ? UIColor.redColor() : i == 1 ? UIColor.greenColor() : UIColor.yellowColor()
-//                    if index == 0 {
-//                        model.noStart = true
-//                        model.curValue =  
-//                        model.nextValue =  
-//                    }
-//                    else if index == 10 {
-//                        model.noEnd = true
-//                        let preModel = (self.dataArray[index - 1] ).lineModels[i]
-//                        model.preValue = preModel.curValue
-//                        model.curValue = preModel.nextValue
-//                    }
-//                    else {
-//                        let preModel = (self.dataArray[index - 1] ).lineModels[i]
-//                        model.preValue = preModel.curValue
-//                        model.curValue = preModel.nextValue
-//                        model.nextValue =  
-//                    }
-//                    data.append(model)
-//                }
-//                lineChartModel.lineModels = data
-//                self.dataArray.append(lineChartModel)
-//            }
-//        }
-//    }
+    func reloadData() -> Void {
+
+        // 1，将外部数据转为可以划线的model
+        if let allData: Array = self.dataConvert() {
+            // 2， 将已经转换好的model 进行分组
+            if let datas: Array = self.dataGroup(allData) {
+                self.configureData(datas)
+            }
+        }
+    }
     
-    // MARK: 
+    // 将外部数据转为可以划线的model
+    func dataConvert() -> [[LineModel]] {
+        var allData: Array = [[LineModel]()]
+        if let lineNumber = self.dataSource?.numberOfLinesInLineChartView(self) {
+            allData.removeAll()
+            for var lineIndex = 0; lineIndex < lineNumber; lineIndex++ {
+                if let dataSource = self.dataSource?.lineChartView(self, dataForItemAtLine: lineIndex) {
+                    var lineModelData: [LineModel] = []
+                    for var index = 0; index < dataSource.count; index++ {
+                        
+                        let lineChartDataModel: LineChartDataModel = dataSource[index];
+                        let model: LineModel = LineModel()
+                        
+                        model.lineColor = lineChartDataModel.lineChartColor
+                        model.bottomString = lineChartDataModel.lineChartName
+                        if index == 0 {
+                            // 第一个
+                            let nextModel = dataSource[index + 1];
+                            model.noStart = true
+                            model.curValue = lineChartDataModel.lineChartData
+                            model.nextValue = nextModel.lineChartData
+                        }
+                        else {
+                            let preModel = dataSource[index - 1]
+                            model.preValue = preModel.lineChartData
+                            model.curValue = lineChartDataModel.lineChartData
+                            if index == dataSource.count-1 {
+                                // 最后一个
+                                model.noEnd = true
+                            } else {
+                                let nextModel = dataSource[index + 1]
+                                model.nextValue = nextModel.lineChartData
+                            }
+                        }
+                        lineModelData.append(model)
+                    }
+                    allData.append(lineModelData)
+                }
+            }
+        }
+        return allData
+    }
+    
+    // 将已经转换好的model 进行分组
+    func dataGroup(allData: [[LineModel]]) -> [LineChartModel] {
+        var dataGroup: [LineChartModel] = []
+        // 获取需要画多少段
+        let itemIndex = allData[0].count
+        for var i = 0; i < itemIndex; i++ {
+            let lineChartModel: LineChartModel = LineChartModel()
+            for var j = 0; j < allData.count; j++ {
+                let objModel = allData[j][i]
+                lineChartModel.lineModels.append(objModel)
+                lineChartModel.bottomString = objModel.bottomString
+            }
+            dataGroup.append(lineChartModel)
+        }
+        return dataGroup
+    }
+    
+    // MARK:
     func configureData(dataModels: [LineChartModel]) -> Void {
         self.dataArray = dataModels
         self.collectionView.reloadData()
@@ -89,4 +126,5 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
 class LineChartDataModel {
     var lineChartData: CGFloat! = 0.0
     var lineChartName: String!
+    var lineChartColor: UIColor!
 }
