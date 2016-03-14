@@ -25,7 +25,7 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
         self.setupView()
     }
     
-    func setupView() -> Void {
+    private func setupView() -> Void {
         NSBundle.mainBundle().loadNibNamed("WDLineChartView", owner: self, options: nil)
         self.addSubview(self.view)
         self.collectionView.registerNib(UINib.init(nibName: "WDLineChartCell", bundle: nil), forCellWithReuseIdentifier: "cell")
@@ -44,7 +44,7 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     // 将外部数据转为可以划线的model
-    func dataConvert() -> [[LineModel]] {
+    private func dataConvert() -> [[LineModel]] {
         var allData: Array = [[LineModel]()]
         if let lineNumber = self.dataSource?.numberOfLinesInLineChartView(self) {
             allData.removeAll()
@@ -87,7 +87,7 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     // 将已经转换好的model 进行分组
-    func dataGroup(allData: [[LineModel]]) -> [LineChartModel] {
+    private func dataGroup(allData: [[LineModel]]) -> [LineChartModel] {
         var dataGroup: [LineChartModel] = []
         // 获取需要画多少段
         let itemIndex = allData[0].count
@@ -104,7 +104,7 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     // MARK:
-    func configureData(dataModels: [LineChartModel]) -> Void {
+    private func configureData(dataModels: [LineChartModel]) -> Void {
         self.dataArray = dataModels
         self.collectionView.reloadData()
     }
