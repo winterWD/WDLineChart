@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Q4w-pz-UT8" customClass="WDLineChartCell" customModule="LineChart" customModuleProvider="target">
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" id="Q4w-pz-UT8" customClass="WDLineChartCell" customModule="LineChart" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="50" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -21,7 +21,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="02-25" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bZ-6h-oeZ">
-                        <rect key="frame" x="0.0" y="135" width="50" height="15"/>
+                        <rect key="frame" x="0.0" y="138" width="50" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="Qhl-T9-Oie"/>
                         </constraints>
@@ -37,7 +37,7 @@
                 <constraint firstItem="0bZ-6h-oeZ" firstAttribute="leading" secondItem="Q4w-pz-UT8" secondAttribute="leading" id="9ue-ec-mhj"/>
                 <constraint firstItem="35c-Uo-wEZ" firstAttribute="centerX" secondItem="Q4w-pz-UT8" secondAttribute="centerX" id="izu-p2-8EC"/>
                 <constraint firstAttribute="bottom" secondItem="35c-Uo-wEZ" secondAttribute="bottom" constant="15" id="mkv-6x-VkD"/>
-                <constraint firstAttribute="bottom" secondItem="0bZ-6h-oeZ" secondAttribute="bottom" id="s8J-Q5-B8L"/>
+                <constraint firstAttribute="bottom" secondItem="0bZ-6h-oeZ" secondAttribute="bottom" constant="-3" id="s8J-Q5-B8L"/>
                 <constraint firstAttribute="trailing" secondItem="0bZ-6h-oeZ" secondAttribute="trailing" id="v0R-ld-Dhd"/>
                 <constraint firstItem="35c-Uo-wEZ" firstAttribute="top" secondItem="Q4w-pz-UT8" secondAttribute="top" id="vZd-Or-6sv"/>
             </constraints>

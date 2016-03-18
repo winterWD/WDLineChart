@@ -19,9 +19,9 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
     @IBOutlet private weak var collectionView: UICollectionView!
     private var dataArray: [LineChartModel] = []
     var dataSource: WDLineChartViewDataSource?
+    var indexPath: NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
     
     override func awakeFromNib() {
-        self.backgroundColor = UIColor.redColor()
         self.setupView()
     }
     
@@ -29,11 +29,11 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
         NSBundle.mainBundle().loadNibNamed("WDLineChartView", owner: self, options: nil)
         self.addSubview(self.view)
         self.collectionView.registerNib(UINib.init(nibName: "WDLineChartCell", bundle: nil), forCellWithReuseIdentifier: "cell")
-        
     }
+    
     // MARK:
     func reloadData() -> Void {
-
+        
         // 1，将外部数据转为可以划线的model
         if let allData: Array = self.dataConvert() {
             // 2， 将已经转换好的model 进行分组
@@ -50,11 +50,12 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
             allData.removeAll()
             for var lineIndex = 0; lineIndex < lineNumber; lineIndex++ {
                 if let dataSource = self.dataSource?.lineChartView(self, dataForItemAtLine: lineIndex) {
+                    let maxVaue = self.calculateMaxValueInDatas(dataSource)
                     var lineModelData: [LineModel] = []
                     for var index = 0; index < dataSource.count; index++ {
                         
                         let lineChartDataModel: LineChartDataModel = dataSource[index];
-                        let model: LineModel = LineModel()
+                        var model: LineModel = LineModel()
                         
                         model.lineColor = lineChartDataModel.lineChartColor
                         model.bottomString = lineChartDataModel.lineChartName
@@ -77,6 +78,7 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
                                 model.nextValue = nextModel.lineChartData
                             }
                         }
+                        model.yAxisValue = maxVaue
                         lineModelData.append(model)
                     }
                     allData.append(lineModelData)
@@ -92,7 +94,7 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
         // 获取需要画多少段
         let itemIndex = allData[0].count
         for var i = 0; i < itemIndex; i++ {
-            let lineChartModel: LineChartModel = LineChartModel()
+            var lineChartModel: LineChartModel = LineChartModel()
             for var j = 0; j < allData.count; j++ {
                 let objModel = allData[j][i]
                 lineChartModel.lineModels.append(objModel)
@@ -103,10 +105,23 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
         return dataGroup
     }
     
-    // MARK:
-    private func configureData(dataModels: [LineChartModel]) -> Void {
+    // MARK: 计算数据中的最大值
+    private func calculateMaxValueInDatas(datas: [LineChartDataModel]) -> CGFloat {
+        var maxValue: CGFloat = 1.0
+        for data in datas {
+            maxValue = max(maxValue, data.lineChartData)
+        }
+        return maxValue
+    }
+    
+    // MARK: 刷新数据
+    private func configureData(dataModels: [LineChartModel]) {
         self.dataArray = dataModels
         self.collectionView.reloadData()
+        let item = dataModels.count - 1
+        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+        self.indexPath = lastItemIndex
+        self.collectionView?.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Left, animated: false)
     }
     
     // MARK: collection delegate
@@ -117,13 +132,26 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: WDLineChartCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! WDLineChartCell
         let cellModel = self.dataArray[indexPath.item]
-        cell.drawLineChart(cellModel)
+        cell.drawLineChart(cellModel, showValue: indexPath.item == self.indexPath.item)
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        // 移除先前的
+        if let preCell: WDLineChartCell = collectionView.cellForItemAtIndexPath(self.indexPath) as? WDLineChartCell {
+            preCell.removeValueLabels()
+        }
+        // 显示当前的
+        collectionView.deselectItemAtIndexPath(indexPath, animated: false)
+        let cell: WDLineChartCell = collectionView.cellForItemAtIndexPath(indexPath) as! WDLineChartCell
+        let cellModel = self.dataArray[indexPath.item]
+        cell.drawLineChart(cellModel, showValue: true)
+        self.indexPath = indexPath
     }
 }
 
 // 外部一般数据 转为图表数据 入口
-class LineChartDataModel {
+struct LineChartDataModel {
     var lineChartData: CGFloat! = 0.0
     var lineChartName: String!
     var lineChartColor: UIColor!
