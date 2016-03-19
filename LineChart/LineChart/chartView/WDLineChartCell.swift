@@ -130,7 +130,8 @@ class WDLineChartCell: UICollectionViewCell {
         return CGSizeMake(max(statusLabelSize.width+6, 40.0), 15)
     }
     
-    // MARK: 圆圈
+    // MARK: 圆圈 
+    // 为了盖住线
     private func drawCircleView(lineModels: [LineModel]) {
         // 移除圆圈 解决复用
         for view in self.circleViews {
@@ -152,40 +153,40 @@ class WDLineChartCell: UICollectionViewCell {
     }
     
     // MARK: 画线
-    override func drawRect(rect: CGRect) {
-        // 清楚所有绘画
-        self.clearsContextBeforeDrawing = true
-        
+    private func drawLine() {
         for model in self.lineModels {
             let startPoint: CGPoint = model.prePoint()
             let middlePoint: CGPoint = model.curPoint()
             let endPoint: CGPoint = model.nextPoint()
             
-            // 获取当前画板
-            let context: CGContextRef = UIGraphicsGetCurrentContext()!
-            CGContextSetAllowsAntialiasing(context, true)// 抗锯齿
-            CGContextSetLineWidth(context, 1) // 画笔宽度
-            CGContextSetLineCap(context, .Round)
-            
-            CGContextSetStrokeColorWithColor(context, model.lineColor.CGColor)
-            CGContextSetFillColorWithColor(context, model.lineColor.CGColor)
+            let path: UIBezierPath = UIBezierPath()
+            path.lineWidth = 1.0
             
             // 画直线
             if model.noStart {
-                CGContextMoveToPoint(context, middlePoint.x, middlePoint.y)
-                CGContextAddLineToPoint(context, endPoint.x, endPoint.y)
+                path.moveToPoint(middlePoint)
+                path.addLineToPoint(endPoint)
             }
             else if model.noEnd {
-                CGContextMoveToPoint(context, startPoint.x, startPoint.y)
-                CGContextAddLineToPoint(context, middlePoint.x, middlePoint.y)
+                path.moveToPoint(startPoint)
+                path.addLineToPoint(middlePoint)
             }
             else {
-                CGContextMoveToPoint(context, startPoint.x, startPoint.y)
-                CGContextAddLineToPoint(context, middlePoint.x, middlePoint.y)
-                CGContextAddLineToPoint(context, endPoint.x, endPoint.y)
+                path.moveToPoint(startPoint)
+                path.addLineToPoint(middlePoint)
+                path.addLineToPoint(endPoint)
             }
-            CGContextStrokePath(context)//结束
+            path.lineCapStyle = .Square
+            path.lineJoinStyle = .Round
+            model.lineColor.set()
+            path.strokeWithBlendMode(.Normal, alpha: 1)
         }
+    }
+    
+    override func drawRect(rect: CGRect) {
+        // 清楚所有绘画
+        self.clearsContextBeforeDrawing = true
+        self.drawLine()
     }
 }
 
