@@ -11,6 +11,7 @@ import UIKit
 protocol WDLineChartViewDataSource {
     func lineChartView(lineChartView: WDLineChartView, dataForItemAtLine line: Int) -> [LineChartDataModel]
     func numberOfLinesInLineChartView(lineChartView: WDLineChartView) -> Int
+    func maxYAxisValueInLineChartView(lineChartView: WDLineChartView) -> CGFloat
 }
 
 class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -48,41 +49,44 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
         var allData: Array = [[LineModel]()]
         if let lineNumber = self.dataSource?.numberOfLinesInLineChartView(self) {
             allData.removeAll()
-            for var lineIndex = 0; lineIndex < lineNumber; lineIndex++ {
-                if let dataSource = self.dataSource?.lineChartView(self, dataForItemAtLine: lineIndex) {
-                    let maxVaue = self.calculateMaxValueInDatas(dataSource)
-                    var lineModelData: [LineModel] = []
-                    for var index = 0; index < dataSource.count; index++ {
+            if let maxVaue = self.dataSource?.maxYAxisValueInLineChartView(self) {
+                for var lineIndex = 0; lineIndex < lineNumber; lineIndex++ {
+                    if let dataSource = self.dataSource?.lineChartView(self, dataForItemAtLine: lineIndex) {
                         
-                        let lineChartDataModel: LineChartDataModel = dataSource[index];
-                        var model: LineModel = LineModel()
-                        
-                        model.lineColor = lineChartDataModel.lineChartColor
-                        model.bottomString = lineChartDataModel.lineChartName
-                        if index == 0 {
-                            // 第一个
-                            let nextModel = dataSource[index + 1];
-                            model.noStart = true
-                            model.curValue = lineChartDataModel.lineChartData
-                            model.nextValue = nextModel.lineChartData
-                        }
-                        else {
-                            let preModel = dataSource[index - 1]
-                            model.preValue = preModel.lineChartData
-                            model.curValue = lineChartDataModel.lineChartData
-                            if index == dataSource.count-1 {
-                                // 最后一个
-                                model.noEnd = true
-                            } else {
-                                let nextModel = dataSource[index + 1]
+                        var lineModelData: [LineModel] = []
+                        for var index = 0; index < dataSource.count; index++ {
+                            
+                            let lineChartDataModel: LineChartDataModel = dataSource[index];
+                            var model: LineModel = LineModel()
+                            
+                            model.lineColor = lineChartDataModel.lineChartColor
+                            model.bottomString = lineChartDataModel.lineChartName
+                            if index == 0 {
+                                // 第一个
+                                let nextModel = dataSource[index + 1];
+                                model.noStart = true
+                                model.curValue = lineChartDataModel.lineChartData
                                 model.nextValue = nextModel.lineChartData
                             }
+                            else {
+                                let preModel = dataSource[index - 1]
+                                model.preValue = preModel.lineChartData
+                                model.curValue = lineChartDataModel.lineChartData
+                                if index == dataSource.count-1 {
+                                    // 最后一个
+                                    model.noEnd = true
+                                } else {
+                                    let nextModel = dataSource[index + 1]
+                                    model.nextValue = nextModel.lineChartData
+                                }
+                            }
+                            model.yAxisValue = maxVaue
+                            lineModelData.append(model)
                         }
-                        model.yAxisValue = maxVaue
-                        lineModelData.append(model)
+                        allData.append(lineModelData)
                     }
-                    allData.append(lineModelData)
                 }
+
             }
         }
         return allData
@@ -103,15 +107,6 @@ class WDLineChartView: UIView, UICollectionViewDelegate, UICollectionViewDataSou
             dataGroup.append(lineChartModel)
         }
         return dataGroup
-    }
-    
-    // MARK: 计算数据中的最大值
-    private func calculateMaxValueInDatas(datas: [LineChartDataModel]) -> CGFloat {
-        var maxValue: CGFloat = 1.0
-        for data in datas {
-            maxValue = max(maxValue, data.lineChartData)
-        }
-        return maxValue
     }
     
     // MARK: 刷新数据

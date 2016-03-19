@@ -216,7 +216,6 @@
 				TargetAttributes = {
 					C85030241C93B29200DD6802 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 3AZ5DU686K;
 					};
 					C85030381C93B29300DD6802 = {
 						CreatedOnToolsVersion = 7.2;

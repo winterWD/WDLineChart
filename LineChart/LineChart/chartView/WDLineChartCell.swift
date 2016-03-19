@@ -14,6 +14,8 @@ class WDLineChartCell: UICollectionViewCell {
     private var lineModels: [LineModel] = []
     private var circleViews: [UIView] = []
     private var valueLabels: [UILabel] = []
+    private var isTopLayout: Bool = false  // 向上显示
+    private var isFirstLayout: Bool = false // 第一次开始布局
     
     // MARK: 更新数据
     func drawLineChart(lineChartModel: LineChartModel, showValue: Bool) {
@@ -42,6 +44,9 @@ class WDLineChartCell: UICollectionViewCell {
     // 重新布局valueLabel的位置
     private func layouts(array:[UILabel]) {
         
+        self.isTopLayout = false
+        self.isFirstLayout = false
+        
         for var i = 0; i < array.count; i++ {
             let baseLabel = array[i]
             for var j = i+1; j < array.count; j++ {
@@ -53,8 +58,10 @@ class WDLineChartCell: UICollectionViewCell {
     // 是否有重叠，有就调整位置
     private func updateLayout(baseLabel: UILabel, objLabel: UILabel) {
         let baseFrame: CGRect = baseLabel.frame
-        let objPointTop: CGPoint = objLabel.frame.origin
-        let objPointBottom: CGPoint = CGPointMake(objLabel.frame.origin.x, objLabel.frame.origin.y + objLabel.frame.size.height)
+        // 重叠范围 修正±
+        let fixValue: CGFloat = 0.0
+        let objPointTop: CGPoint = CGPointMake(objLabel.frame.origin.x, objLabel.frame.origin.y + fixValue)
+        let objPointBottom: CGPoint = CGPointMake(objLabel.frame.origin.x, objLabel.frame.origin.y + objLabel.frame.size.height - fixValue)
         if baseFrame.contains(objPointTop) || baseFrame.contains(objPointBottom) {
             self.layoutLabels(baseLabel, objLabel: objLabel)
         }
@@ -66,8 +73,24 @@ class WDLineChartCell: UICollectionViewCell {
         let height: CGFloat = baseLabel.frame.size.height
         
         let center = objLabel.center
-        if centerY > 93.0 {
-            // 向上显示  93 刚好显示3个
+        
+        guard self.isFirstLayout else {
+            self.isFirstLayout = true
+            if centerY > 93.0 {
+                // 向上显示  93 刚好显示3个
+                self.isTopLayout = true
+                objLabel.center = CGPointMake(center.x, centerY - height)
+            }
+            else {
+                // 向下显示
+                self.isTopLayout = false
+                objLabel.center = CGPointMake(center.x, centerY + height)
+            }
+            return
+        }
+        
+        if self.isTopLayout {
+            // 向上显示
             objLabel.center = CGPointMake(center.x, centerY - height)
         }
         else {
