@@ -101,6 +101,7 @@ class WDLineChartCell: UICollectionViewCell {
     
     // MARK: 显示valueLabel
     private func displayValue(lineModels: [LineModel]) {
+        self.removeValueLabels()
         for model in lineModels {
             let valueLabel = UILabel.init()
             valueLabel.backgroundColor = model.lineColor
